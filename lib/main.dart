@@ -9,6 +9,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
 
       home: Scaffold(
       body: MyHomePage(),
@@ -37,6 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   int _n = 0;
+
+
   void add() {
     setState(() {
       _n++;
@@ -47,6 +50,33 @@ class _MyHomePageState extends State<MyHomePage> {
       if (_n != 0)
         _n--;
     });
+  }
+
+  showAlertDialog(BuildContext context) {
+    // Create button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Order Successful"),
+      content: Text("Your order has been placed successfully"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   @override
@@ -78,8 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                     padding: const EdgeInsets.only(top:20,left:40.0,right: 40),
                     child: Container(
+                      height: 70,
                       padding: EdgeInsets.only(left: 20,right: 20),
-                      decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.amber,Colors.orangeAccent[700]]),borderRadius: BorderRadius.circular(20)),
+                      decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.amber.withOpacity(0.8),Colors.orangeAccent[700]]),borderRadius: BorderRadius.circular(20)),
                       child: FormField<String>(
                         builder: (FormFieldState<String> state) {
                           return InputDecorator(
@@ -90,6 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             isEmpty: _currentSelectedValue == '',
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
+                                iconEnabledColor: Colors.black,
                                 value: _currentSelectedValue,
                                 isDense: true,
                                 onChanged: (String newValue) {
@@ -115,14 +147,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   Padding(
                     padding: const EdgeInsets.only(top:20,left: 40,right: 40),
                     child: Container(
-                      decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.amber,Colors.orangeAccent[700]]),borderRadius: BorderRadius.circular(20)),
+                      height: 70,
+                      decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.amber.withOpacity(0.8),Colors.orangeAccent[700]]),borderRadius: BorderRadius.circular(20)),
                       child: new Center(
                         child: new Row(
 
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.only(left: 20,right: 20),
-                              child: Text("Selct Quantity",style: TextStyle(color: Colors.black),),
+                              child: Text("Select Quantity",style: TextStyle(color: Colors.black),),
                             ),
 
                             Padding(
@@ -159,14 +192,33 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
 
                   Padding(
-                    padding: const EdgeInsets.only(left:40.0,right: 40,top: 20,bottom: 20),
+                    padding: const EdgeInsets.only(left:40.0,right: 40,top: 20),
                     child: Container(
-                      decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.amber,Colors.orangeAccent[700]]),borderRadius: BorderRadius.circular(20)),
+                      height: 70,
+                      decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.amber.withOpacity(0.8),Colors.orangeAccent[700]]),borderRadius: BorderRadius.circular(20)),
                       padding: EdgeInsets.only(left: 20,right: 20),
                       child: TextFormField(
-
                         cursorColor: Colors.black,
-                        decoration: InputDecoration(fillColor: Colors.black,hintText: 'Address',hintStyle: TextStyle(color: Colors.black)),
+                        decoration: InputDecoration(fillColor: Colors.black,hintText: 'Name',hintStyle: TextStyle(color: Colors.black)),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left:40.0,right: 40,top: 20),
+                    child: Container(
+                      height: 70,
+                      decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.amber.withOpacity(0.8),Colors.orangeAccent[700]]),borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.only(left: 20,right: 20),
+                      child: TextFormField(
+                        cursorColor: Colors.black,
+                        decoration: InputDecoration(fillColor: Colors.black,hintText: 'Phone Number',hintStyle: TextStyle(color: Colors.black)),
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter some text';
@@ -178,6 +230,24 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
 
 
+                  Padding(
+                    padding: const EdgeInsets.only(left:40.0,right: 40,top: 20,bottom: 20),
+                    child: Container(
+                      height: 70,
+                      decoration: BoxDecoration(gradient: LinearGradient(colors: [Colors.amber.withOpacity(0.8),Colors.orangeAccent[700]]),borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.only(left: 20,right: 20),
+                      child: TextFormField(
+                        cursorColor: Colors.black,
+                        decoration: InputDecoration(fillColor: Colors.black,hintText: 'Address',hintStyle: TextStyle(color: Colors.black)),
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
 
@@ -192,18 +262,21 @@ class _MyHomePageState extends State<MyHomePage> {
                     // otherwise.
                     if (_formKey.currentState.validate()) {
                       // If the form is valid, display a Snackbar.
-                      Scaffold.of(context)
-                          .showSnackBar(SnackBar(content: Text('Processing Data')));
+                      showAlertDialog(context);
                     }
                   },
                   label: Text("Order",style: TextStyle(color: Colors.black),),
                 ),
               ),
 
-
+              SizedBox(height: 20,),
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: Text("© Developed By Sauvik Nath",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),textAlign: TextAlign.right,),
+              ),
+              SizedBox(height: 20,),
             ],
           ),
-
     );
   }
 }
