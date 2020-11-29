@@ -10,9 +10,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-
-      home: Scaffold(
-      body: MyHomePage(),
+         home: Scaffold(
+             body: MyHomePage(),
       )
     );
   }
@@ -26,25 +25,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _formKey = GlobalKey<FormState>();
   String _currentSelectedValue = 'Select Food Item';
-  var _currencies = [
-    "Select Food Item",
-    "Biryani",
-    "Chicken Fried Rice",
-    "Burger",
-    "Pizza",
-    "Kadhai Paneer",
-    "Dal Makhni",
-    "Tandoori Roti"
-  ];
-
   int _n = 0;
+  var _currencies = ["Select Food Item", "Biryani", "Chicken Fried Rice", "Burger", "Pizza", "Kadhai Paneer", "Dal Makhni", "Tandoori Roti"];
 
-
+  //QuantityAdd
   void add() {
     setState(() {
       _n++;
     });
   }
+
+  //QuantitySubtract
   void minus() {
     setState(() {
       if (_n != 0)
@@ -52,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  //DeliveryAlert
   showAlertDialog(BuildContext context) {
     // Create button
     Widget okButton = FlatButton(
@@ -87,6 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
             
             children: <Widget>[
+              //Image
               Container(
                 height: 600,
                 decoration: BoxDecoration(
@@ -99,12 +92,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   SizedBox(height: 20,),
+
+                  //OrderFood
                   Padding(
                     padding: const EdgeInsets.only(left:40,right: 40,bottom: 10),
                     child: Container(
                         alignment: Alignment.centerLeft,
                         child: Text("Order Food", style: TextStyle(fontSize: 40,fontWeight: FontWeight.bold),)),
                   ),
+
+                  //DropDown
                   Padding(
                     padding: const EdgeInsets.only(top:20,left:40.0,right: 40),
                     child: Container(
@@ -144,6 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
 
+                  //SelectQuantity
                   Padding(
                     padding: const EdgeInsets.only(top:20,left: 40,right: 40),
                     child: Container(
@@ -191,6 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
 
+                  //Name
                   Padding(
                     padding: const EdgeInsets.only(left:40.0,right: 40,top: 20),
                     child: Container(
@@ -210,6 +209,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
 
+                  //PhoneNumber
                   Padding(
                     padding: const EdgeInsets.only(left:40.0,right: 40,top: 20),
                     child: Container(
@@ -229,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
 
-
+                  //Address
                   Padding(
                     padding: const EdgeInsets.only(left:40.0,right: 40,top: 20,bottom: 20),
                     child: Container(
@@ -251,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ],
               ),
 
-
+              //OrderButton
               Padding(
                 padding: const EdgeInsets.only(top: 20,left:140,right: 140,bottom: 40),
                 child: FloatingActionButton.extended(
@@ -270,10 +270,13 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
               SizedBox(height: 20,),
+
+              //DevelopedBy
               Padding(
                 padding: const EdgeInsets.only(right: 20),
-                child: Text("© Developed By Sauvik Nath",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),textAlign: TextAlign.right,),
+                child: Text("© Developed By Sauvik Nath",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20),textAlign: TextAlign.center,),
               ),
+
               SizedBox(height: 20,),
             ],
           ),
