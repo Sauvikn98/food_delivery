@@ -9,6 +9,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  String a = '';
   final databaseReference = FirebaseFirestore.instance;
   final myController = TextEditingController();
   final myController1 = TextEditingController();
@@ -55,6 +56,19 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void createRecord() async {
+
+    DocumentReference ref = await databaseReference.collection("Food")
+        .add({
+      'Food': _currentSelectedValue,
+      'Quantity': _n,
+      'Name': myController.text,
+      'Phone Number': myController1.text,
+      'Address': myController2.text,
+    });
+    a = ref.id;
+  }
+
   //DeliveryAlert
   showAlertDialog(BuildContext context) {
     // Create button
@@ -68,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // Create AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Order Successful"),
-      content: Text("Your order has been placed successfully"),
+      content: Text("Your order has been placed successfully, Your order Id is $a"),
       actions: [
         okButton,
       ],
@@ -83,22 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void createRecord() async {
-    await databaseReference.collection("Food")
-        .doc("1")
-        .set({
-      'title': 'Food Delivery',
-      'description': 'Customer Details'
-    });
 
-    DocumentReference ref = await databaseReference.collection("Food")
-        .add({
-      'Name': myController.text,
-      'Phone Number': myController1.text,
-      'Address': myController2.text,
-    });
-    print(ref.id);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +156,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         )
                         : Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         CircleAvatar(
                           radius: 15,
@@ -176,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           style: TextStyle(
                             color: _isHovering[3]
                                 ? Colors.white
-                                : Colors.white70,
+                                : Colors.white,
                           ),
                         ),
                         SizedBox(width: 10),
